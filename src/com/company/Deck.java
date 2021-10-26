@@ -51,8 +51,7 @@ public class Deck {
     public void addCard(Card addCard){
         this.cards.add(addCard);
     }
-    public Card stand(Deck i) {return this.cards.get(0);}
-    //Kolla rad 54 om du får problem med response 2
+
 
     public void draw(Deck comingFrom){
         this.cards.add(comingFrom.getCard(0));

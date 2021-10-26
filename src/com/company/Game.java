@@ -6,9 +6,9 @@ public class Game {
     private Deck Cards;
     private Deck GamblerDeck;
     private Deck DealerDeck;
-    private Deck GamblerBet;
+    private int GamblerBet;
     private int GamblerMoney;
-    private final Scanner userInput;
+    private Scanner userInput;
 
 
     public Game() {
@@ -16,6 +16,7 @@ public class Game {
         Cards = new Deck();
         Cards.createFullDeck();
         Cards.shuffle();
+        GamblerBet = 10;
         GamblerDeck = new Deck();
         DealerDeck = new Deck();
         DealerDeck.cardsValue();
@@ -25,51 +26,59 @@ public class Game {
         userInput = new Scanner(System.in);
     }
 
-    public void run() {
+    public byte run() {
         while (GamblerMoney > 0) {
             //boolean endRound = false;
-            double GamblerBet = playerInfo();
+            int GamblerBet = playerInfo();
             int cardsValue = DealerDeck.cardsValue();
             if (GamblerBet < 0) {
                 break;
             }
             dealCards();
             playRound();
-
         }
+        return 0;
     }
 
     private void playRound() {
         while (true) {
-            int response = userInput.nextInt();
             System.out.println("Your hand");
             System.out.println(GamblerDeck.toString());
             System.out.println("Your deck is valued at: " + GamblerDeck.cardsValue());
             System.out.println("Would you like to (1)Hit or (2)Stand?");
+            int response = userInput.nextInt();
             hitOrStand(response);
+            lowCards(response);
             System.out.println("Dealer Cards: " + DealerDeck.toString());
             DealerSmallValue();
             System.out.println("Dealer's Hand is valued at: " + DealerDeck.cardsValue());
             DealerGetsFat();
             DealerWin();
             tieCards();
-            GamblerWin();
+            GamblerWinOrLose();
             GamblerDeck.moveAllToDeck(Cards);
             DealerDeck.moveAllToDeck(Cards);
-            System.out.println("End of hand");
-            
+            break;
         }
     }
     private void hitOrStand(int response) {
         if (response == 1) {
             GamblerDeck.draw(Cards);
             System.out.println("You draw a: " + GamblerDeck.getCard(GamblerDeck.deckSize() - 1).toString());
-            if (response == 2) {
-                GamblerDeck.stand(Cards);
-            }
+            System.out.println("Currently valued at: " + GamblerDeck.cardsValue());
             if (GamblerDeck.cardsValue() > 21) {
                 System.out.println("Bust. Currently valued at: " + GamblerDeck.cardsValue());
                 GamblerMoney -= GamblerBet;
+            }
+        }
+    }
+    private void lowCards(int response){
+        if ((GamblerDeck.cardsValue() < 21)) {
+            System.out.println("Would you like one more card?");
+            if (response == 1) {
+                GamblerDeck.draw(Cards);
+                System.out.println("You draw a: " + GamblerDeck.getCard(GamblerDeck.deckSize() - 1).toString());
+                System.out.println("Currently valued at: " + GamblerDeck.cardsValue());
             }
         }
     }
@@ -92,17 +101,16 @@ public class Game {
         if ((DealerDeck.cardsValue() > GamblerDeck.cardsValue())) {
                 System.out.println("Dealer Beats you!");
                 GamblerMoney -= GamblerBet;
-
         }
     }
 
     private void tieCards() {
         if ((GamblerDeck.cardsValue() == DealerDeck.cardsValue())) {
-            System.out.println("push");
+            System.out.println("TieGame, you get your money back");
         }
     }
 
-    private void GamblerWin() {
+    private void GamblerWinOrLose() {
         if ((GamblerDeck.cardsValue() > DealerDeck.cardsValue())) {
             System.out.println("You win the hand!");
             GamblerMoney += GamblerBet;
@@ -124,12 +132,12 @@ public class Game {
         DealerDeck.draw(Cards);
     }
 
-    private double playerInfo() {
+    private int playerInfo() {
         System.out.println("You have $" + GamblerMoney + ",how much would you like to bet?");
-        double GamblerBet = userInput.nextDouble();
+        int GamblerBet = userInput.nextInt();
         if (GamblerBet > GamblerMoney) {
             System.out.println("Are you trying to cheat? Get out of my Casino your useless scum!");
-            return -1.0;
+            return 0;
         }
         return GamblerBet;
     }
@@ -162,11 +170,11 @@ public class Game {
         return GamblerMoney;
     }
 
-    public void setGamblerMoney(double gamblerMoney) {
+    public void setGamblerMoney(int gamblerMoney) {
         GamblerMoney = gamblerMoney;
     }
 
-    public Deck getGamblerBet() {
+    public int getGamblerBet() {
         return GamblerBet;
     }
 }

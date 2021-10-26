@@ -12,23 +12,12 @@ class MainTest {
         Assertions.assertEquals(zero, d.cardsValue());
     }
 
-    @Test public void testIfDealerGetsFat()
+    @Test public void MoneyCheckWithGambler()
     {
-    //Deck d = new Deck();
-    //Game game = new Game(gamblerBet);
-    //game.getDealerDeck();
-
+        Game G = new Game();
+        int Money = 100;
+        Assertions.assertEquals(Money, G.getGamblerMoney());
     }
-    @Test public void main()
-    {
-        Main main = new Main();
-        Deck d = new Deck();
-        int cardsValue = 22;
-        Boolean endround = false;
-        if(cardsValue > 21){
 
-        endround = true;
-        }
-    }
 
 }

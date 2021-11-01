@@ -11,21 +11,26 @@ public class Deck {
         this.cards = new ArrayList<Card>();
     }
 
-    public void createFullDeck(){
-        for(Suit cardSuit : Suit.values()){
-            for(Value cardValue : Value.values()){
+    public void createFullDeck()
+    {
+        for(Suit cardSuit : Suit.values())
+        {
+            for(Value cardValue : Value.values())
+            {
                 this.cards.add(new Card(cardSuit,cardValue));
             }
         }
     }
 
-    public void shuffle(){
+    public void shuffle()
+    {
         ArrayList<Card> TDeck = new ArrayList<Card>();
 
         Random random = new Random();
         int randomCardIndex = 0;
         int originalSize = this.cards.size();
-        for(int i=0; i< originalSize; i++){
+        for(int i=0; i< originalSize; i++)
+        {
             randomCardIndex = random.nextInt((this.cards.size() - 1) + 1);
             TDeck.add(this.cards.get(randomCardIndex));
 
@@ -34,15 +39,18 @@ public class Deck {
         this.cards = TDeck;
     }
 
-    public String toString(){
+    public String toString()
+    {
         StringBuilder cardListOutput = new StringBuilder();
-        for(Card aCard : this.cards){
+        for(Card aCard : this.cards)
+        {
             cardListOutput.append("\n ").append(aCard.toString());
         }
         return cardListOutput.toString();
     }
 
-    public void removeCard(int i){
+    public void removeCard(int i)
+    {
         this.cards.remove(i);
     }
     public Card getCard(int i) {
@@ -53,7 +61,8 @@ public class Deck {
     }
 
 
-    public void draw(Deck comingFrom){
+    public void draw(Deck comingFrom)
+    {
         this.cards.add(comingFrom.getCard(0));
         comingFrom.removeCard(0);
     }
@@ -62,23 +71,29 @@ public class Deck {
         return this.cards.size();
     }
 
-    public void moveAllToDeck(Deck moveTo){
+    public void moveAllToDeck(Deck moveTo)
+    {
         int thisDeckSize = this.cards.size();
 
-        for(int i = 0; i < thisDeckSize; i++){
+        for(int i = 0; i < thisDeckSize; i++)
+        {
             moveTo.addCard(this.getCard(i));
         }
-        for(int i = 0; i < thisDeckSize; i++){
+        for(int i = 0; i < thisDeckSize; i++)
+        {
             this.removeCard(0);
         }
     }
 
-    public int cardsValue() {
+    public int cardsValue()
+    {
         int totalValue = 0;
         int aces = 0;
 
-        for (Card aCard : this.cards) {
-            switch (aCard.getValue()) {
+        for (Card aCard : this.cards)
+        {
+            switch (aCard.getValue())
+            {
                 case TWO -> totalValue += 2;
                 case THREE -> totalValue += 3;
                 case FOUR -> totalValue += 4;
@@ -91,8 +106,10 @@ public class Deck {
                 case ACE -> aces += 1;
             }
         }
-        for (int i = 0; i < aces; i++) {
-            if (totalValue > 10) {
+        for (int i = 0; i < aces; i++)
+        {
+            if (totalValue > 10)
+            {
                 totalValue += 1;
             } else {
                 totalValue += 11;

@@ -157,7 +157,7 @@ public class Game {
         if (GamblerDeck.cardsValue() > 21)
         {
             paus(1500);
-            System.out.println("You Bust at Value: " + GamblerDeck.cardsValue() + " ,Dealer Win");
+            System.out.println("You Bust at Value: " + GamblerDeck.cardsValue());
             GamblerMoney -= GamblerBet;
         }
     }
@@ -248,42 +248,6 @@ public class Game {
             System.exit(0);
         }
         return GamblerBet;
-    }
-
-
-    public Deck getCards()
-    {
-        return Cards;
-    }
-
-
-    public void setCards(Deck cards)
-    {
-        Cards = cards;
-    }
-
-
-    public Deck getGamblerDeck()
-    {
-        return GamblerDeck;
-    }
-
-
-    public void setGamblerDeck(Deck gamblerDeck)
-    {
-        GamblerDeck = gamblerDeck;
-    }
-
-
-    public Deck getDealerDeck()
-    {
-        return DealerDeck;
-    }
-
-
-    public void setDealerDeck(Deck dealerDeck)
-    {
-        DealerDeck = dealerDeck;
     }
 
 
